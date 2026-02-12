@@ -45,7 +45,7 @@ Dans ce workshop, nous mettons en place :
 
 L’énoncé détaillé du Workshop 2 est disponible au format PDF :
 
-👉 [Télécharger l’énoncé du Workshop 2](Atelier_Eureka server.pdf)
+👉 [Télécharger l’énoncé du Workshop 2](https://github.com/badi3a/AWD-Training/blob/main/Atelier_Eureka%20server.pdf)
 
 ---
 
