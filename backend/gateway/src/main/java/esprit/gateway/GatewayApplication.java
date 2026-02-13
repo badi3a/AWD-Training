@@ -16,5 +16,17 @@ public class GatewayApplication {
     }
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
-        return builder.routes() .route("candidat",r->r.path("/mic1/**") .uri("http://localhost:8081") ).build(); }
+       /* return builder.routes() .route("candidat",r->r.path("/mic1/**") .uri("http://localhost:8081") )
+                .route("job",r->r.path("/mic2/**") .uri("http://localhost:8082") )
+                .route("candidature",r->r.path("/mic3/**") .uri("http://localhost:8083"))
+                .route("meeting",r->r.path("/mic5/**") .uri("http://localhost:8085"))
+                .route("notification",r->r.path("/mic4/**") .uri("http://localhost:8084"))
+                .build(); }
+    */
+        return builder.routes().route("condidat",r->r.path("/mic1/**") .uri("lb://CANDIDAT"))
+                .route("candidature",r->r.path("/mic3/**") .uri("lb://CANDIDATURE"))
+                .route("job",r->r.path("/mic2/**") .uri("lb://JOB"))
+                .route("notification",r->r.path("/mic4/**") .uri("lb://NOTIFICATION"))
+                .route("meeting",r->r.path("/mic5/**") .uri("lb://MEETING"))
+                .build(); }
 }
