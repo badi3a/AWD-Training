@@ -12,12 +12,13 @@
         <module name="candidat" />
         <module name="ConfigServer" />
         <module name="Job" />
+        <module name="job" />
+        <module name="meeting" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="condidature" target="1.5" />
-      <module name="meeting" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -29,7 +30,8 @@
       <module name="config-server" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="gateway" options="-parameters" />
-      <module name="meeting" options="" />
+      <module name="job" options="-parameters" />
+      <module name="meeting" options="-parameters" />
       <module name="notification" options="-parameters" />
     </option>
   </component>
