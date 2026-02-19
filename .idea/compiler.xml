@@ -17,7 +17,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="condidature" target="1.5" />
-      <module name="meeting" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

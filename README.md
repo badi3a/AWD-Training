@@ -1,22 +1,22 @@
-# Workshop 3 – Implémentation de l’API Gateway
+# Workshop 4 – Communication inter-services avec OpenFeign
 
 🎓 **Formation : Microservices**  
 📅 **Année universitaire : 2025–2026**  
-🧑‍💻 **Workshop 3**
+🧑‍💻 **Workshop 4**
 
 ---
 
 ## 🎯 Objectif du workshop
 
-L’objectif de ce workshop est de mettre en place une **API Gateway** jouant le rôle de point d’entrée unique vers les microservices.
+L’objectif de ce workshop est de mettre en place la communication inter-microservices en utilisant **Spring Cloud OpenFeign**.
 
 À la fin de ce workshop, l’étudiant sera capable de :
 
-- Comprendre le rôle d’une API Gateway dans une architecture microservices
-- Mettre en place une configuration **statique**
-- Mettre en place une configuration **dynamique avec Eureka**
-- Observer le mécanisme de **load balancing**
-- Comparer les approches statique et dynamique
+- Comprendre le principe de communication synchrone entre microservices
+- Configurer et utiliser OpenFeign
+- Intégrer Eureka pour la découverte dynamique des services
+- Implémenter un endpoint enrichi (agrégation de données)
+- Respecter les bonnes pratiques d’architecture microservices
 
 ---
 
@@ -24,25 +24,40 @@ L’objectif de ce workshop est de mettre en place une **API Gateway** jouant le
 
 Dans ce workshop, nous mettons en œuvre :
 
-- 🖥️ Un **API Gateway**
-- 📦 Les microservices existants (Candidat, Job)
-- 🔁 Routage des requêtes via la Gateway
-- ⚖️ Load balancing automatique via Eureka
+- 🖥️ Un **Eureka Server**
+- 📦 Microservice **Job**
+- 👤 Microservice **Candidat**
+- 📑 Microservice **Candidature**
+- 🔁 Communication inter-services via **OpenFeign**
 
-L’API Gateway agit comme un **intermédiaire intelligent** qui :
+Le microservice **Candidature** :
 
-- Reçoit les requêtes clients
-- Sélectionne une instance disponible
-- Redirige la requête vers le microservice approprié
+- Stocke uniquement `jobId` et `candidatId`
+- Récupère les informations complètes via Feign
+- Propose un endpoint enrichi `/details`
+
+---
+
+## 🔄 Principe de fonctionnement
+
+1. Le client appelle le microservice **Candidature**.
+2. Le service récupère les données locales.
+3. Il interroge dynamiquement :
+   - Le microservice **Job**
+   - Le microservice **Candidat**
+4. Il retourne une réponse enrichie combinant les données.
 
 ---
 
 ## 🛠️ Technologies utilisées
 
 - Java 17
-- Spring Boot
-- Spring Cloud Gateway
-- Spring Cloud Netflix Eureka Client
+- Spring Boot 3.x
+- Spring Data JPA
+- Spring Web (REST)
+- Spring Cloud OpenFeign
+- Spring Cloud Netflix Eureka
+- MySQL
 - Maven
 - IntelliJ IDEA
 
@@ -50,39 +65,42 @@ L’API Gateway agit comme un **intermédiaire intelligent** qui :
 
 ## 📄 Énoncé du workshop
 
-L’énoncé détaillé du Workshop 3 est disponible au format PDF :
+L’énoncé détaillé du Workshop 4 est disponible au format PDF :
 
-👉 [Télécharger l’énoncé du Workshop 3](Implémentation API Gateway.pdf)
+👉 [Télécharger l’énoncé du Workshop 2](https://github.com/badi3a/AWD-Training/blob/W04-OpenFeign/Atelier%20Communication%20entre%20MS%20avec%20OpenFeign.pdf)
 
 ---
 
 ## 📝 Travail à faire (Rendu)
 
-- Implémenter une **configuration statique**
-- Implémenter une **configuration dynamique avec Eureka**
-- Activer les logs de routage
-- Identifier l’algorithme de load balancing utilisé
-- Tester l’algorithme **Random** uniquement pour le service Candidat
-- Comparer les deux approches (statique vs dynamique)
+- Configurer Eureka Server
+- Créer les microservices Job, Candidat et Candidature
+- Activer OpenFeign dans le microservice Candidature
+- Implémenter les Feign Clients
+- Créer un endpoint enrichi `/candidature/{id}/details`
+- Tester la communication inter-services
+
 
 ---
 
-## ⚖️ Comparaison des approches
+## 🧠 Concepts abordés
 
-| Approche | Utilise Eureka ? | Avantages | Inconvénients |
-|-----------|------------------|------------|---------------|
-| Dynamique (lb://service) | ✅ Oui | Pas besoin de connaître l’URL exacte, support multi-instances, load balancing automatique | Dépendance à Eureka |
-| Statique (uri http://...) | ❌ Non | Simple et rapide à configurer | Non adapté aux environnements dynamiques |
+- Architecture microservices
+- Communication synchrone
+- Découverte de services
+- DTO vs Entity
+- Références distantes par identifiant
+- Agrégation de données distribuées
 
 ---
 
 ## ✅ Rendu attendu
 
-- Projet **API Gateway fonctionnel**
-- Routage correct vers les microservices
-- Intégration réussie avec Eureka
-- Load balancing observable en console
-- Code structuré et propre
+- Eureka fonctionnel
+- Microservices correctement enregistrés
+- Communication Feign opérationnelle
+- Endpoint enrichi fonctionnel
+- Code structuré et respectant les bonnes pratiques
 - Projet poussé sur **GitHub**
 
 ---
