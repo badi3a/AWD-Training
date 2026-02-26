@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/microservices/candidat/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/canditature/pom.xml" />
         <option value="$PROJECT_DIR$/microservices/notification/pom.xml" />
+        <option value="$PROJECT_DIR$/config/pom.xml" />
       </list>
     </option>
   </component>

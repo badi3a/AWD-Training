@@ -1,20 +1,24 @@
 package esprit.candidat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RefreshScope
 @RestController
 @RequestMapping("mic1/candidats")
 public class CandidatRestApi {
     //simple web service for testing
+    @Value("${welcome.message}")
+    private String welcomemessage;
     @GetMapping("/hello")
     public String sayHello() {
-        return "Hello I'm Microservice 1: I work on Candidat and Adress Entities";
+        return welcomemessage;
     }
     @Autowired
     private CandidatService candidatService;

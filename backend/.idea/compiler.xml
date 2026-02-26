@@ -12,6 +12,7 @@
         <module name="candidat" />
         <module name="job" />
         <module name="meeting" />
+        <module name="config" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="candidat" options="-parameters" />
       <module name="canditature" options="-parameters" />
+      <module name="config" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="job" options="-parameters" />
