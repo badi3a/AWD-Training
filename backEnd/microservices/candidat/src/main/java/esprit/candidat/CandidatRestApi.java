@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("mic1/candidats")
-public class CandidatRESTApi {
+public class CandidatRestApi {
     //simple web service for testing
     @GetMapping("/hello")
     public String sayHello() {
