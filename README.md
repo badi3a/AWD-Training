@@ -1,7 +1,9 @@
 
 # 🚀 Architecture Microservices : Du Monolithe vers l'Écosystème Distribué
 📅 **Année universitaire : 2025–2026** 
-Ce dépôt contient l'ensemble des ressources pédagogiques et techniques pour le module de développement d'architectures microservices. L'objectif est de transformer une application monolithique de recrutement en un système distribué résilient et scalable.
+Ce dépôt contient l'ensemble des ressources pédagogiques et techniques pour le module de développement d'architectures microservices. 
+Ce repository contient les ressources, exemples et travaux pratiques du cours **Microservices avec Java & Spring**.  
+L’objectif est d’apprendre à concevoir, développer et déployer des applications basées sur une architecture microservices.
 
 ---
 
@@ -19,6 +21,36 @@ Ce dépôt contient l'ensemble des ressources pédagogiques et techniques pour l
 * **AA8 :** Réaliser un projet complet intégrant la communication inter-services et la validation des flux de bout en bout.
 
 ---
+
+## 🛠️ Technical Requirements
+
+Avant de commencer, merci d’installer les outils suivants :
+
+### 🔹 Environnement de développement
+- IntelliJ IDEA Ultimate (recommandé)
+
+### 🔹 Langage & outils
+- JDK 17 ou supérieur  
+- Maven ou Gradle  
+
+### 🔹 Versioning
+- Git  
+- Compte GitHub ou GitLab  
+
+### 🔹 API Testing
+- Postman ou Insomnia  
+
+### 🔹 Optionnel
+- Docker  
+- MySQL / PostgreSQL / H2  
+
+---
+
+### ⚠️ Important
+
+Même si IntelliJ IDEA Ultimate est installé :
+- Le **JDK est obligatoire**
+- Maven peut être utilisé via IntelliJ, mais une installation locale est recommandée
 
 ---
 
