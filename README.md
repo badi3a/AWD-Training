@@ -1,6 +1,8 @@
 
 # 🚀 Architecture Microservices : Du Monolithe vers l'Écosystème Distribué
 📅 **Année universitaire : 2025–2026** 
+
+
 Ce dépôt contient l'ensemble des ressources pédagogiques et techniques pour le module de développement d'architectures microservices. 
 Ce repository contient les ressources, exemples et travaux pratiques du cours **Microservices avec Java & Spring**.  
 L’objectif est d’apprendre à concevoir, développer et déployer des applications basées sur une architecture microservices.
@@ -31,7 +33,7 @@ Avant de commencer, merci d’installer les outils suivants :
 
 ### 🔹 Langage & outils
 - JDK 17 ou supérieur  
-- Maven ou Gradle  
+- Maven 
 
 ### 🔹 Versioning
 - Git  
