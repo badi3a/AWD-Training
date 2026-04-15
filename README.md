@@ -32,16 +32,14 @@ Avant de commencer, merci d’installer les outils suivants :
 * **Langage & outils:**
 - JDK 17 ou supérieur  
 - Maven
-* **Versioning:**  
-- Compte GitHub ou GitLab  
+- NodeJS (version LTS)
+- Angular CLI (version 18)
+* **Versioning:**  Compte GitHub ou GitLab  
 
-* **API Testing:**
-- Postman ou Insomnia  
-
+* **API Testing:** Postman ou Insomnia  
 * **Optionnel:**
 - Docker  
 - MySQL / PostgreSQL / H2  
-
 ---
 
 ### ⚠️ Important
