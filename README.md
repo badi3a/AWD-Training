@@ -28,21 +28,17 @@ L’objectif est d’apprendre à concevoir, développer et déployer des applic
 
 Avant de commencer, merci d’installer les outils suivants :
 
-### 🔹 Environnement de développement
-- IntelliJ IDEA Ultimate (recommandé)
-
-### 🔹 Langage & outils
+* **Environnement de développement:** IntelliJ IDEA Ultimate (recommandé)
+* **Langage & outils:**
 - JDK 17 ou supérieur  
-- Maven 
-
-### 🔹 Versioning
-- Git  
+- Maven
+* **Versioning:**  
 - Compte GitHub ou GitLab  
 
-### 🔹 API Testing
+* **API Testing:**
 - Postman ou Insomnia  
 
-### 🔹 Optionnel
+* **Optionnel:**
 - Docker  
 - MySQL / PostgreSQL / H2  
 
