@@ -1,0 +1,40 @@
+{
+  "name": "jobboard-rest-api",
+  "version": "1.0.0",
+  "description": "API REST pédagogique pour la plateforme JobBoard — Chapitre 2 du module Applications Web Distribuées (ESPRIT · AWD)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "db:init": "node scripts/init-db.js"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "express",
+    "mysql",
+    "swagger",
+    "esprit",
+    "pedagogical",
+    "jobboard"
+  ],
+  "author": "ESPRIT — Module Applications Web Distribuées",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.10.1",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
