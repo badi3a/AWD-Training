@@ -76,7 +76,7 @@ Le diagramme UML fourni définit 7 entités et leurs relations :
 
 L'application suit une **architecture web Distribuée avec un backend RESTFul monolithique** inspirée du pattern Symfony que les étudiants connaissent déjà :
 
-![JobBoard RESTful Architecture](https://github.com/badi3a/AWD-Training/blob/W01-Developper_MicroService/documentation/l'architecture%20globale.png))
+![JobBoard RESTful Architecture](https://github.com/badi3a/AWD-Training/blob/W01-Developper_MicroService/documentation/l'architecture%20globale.png)
 
 *Figure 1. Monolithic RESTful architecture of the JobBoard application.*
 
