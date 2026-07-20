@@ -56,8 +56,7 @@ Le diagramme UML fourni définit 7 entités et leurs relations :
 - `Application` **1—1** `Notification`
 
 ![JobBoard Diagramme de classe](https://github.com/badi3a/AWD-Training/blob/W01-Developper_MicroService/documentation/class-diagram.png)
-
-*Figure 2. Monolithic RESTful architecture of the JobBoard application.*
+* Figure 1. JobBoard Diagramme de classe.*
 ---
 
 ## 🎓 Objectifs pédagogiques
