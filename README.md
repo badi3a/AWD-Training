@@ -74,44 +74,14 @@ Le diagramme UML fourni définit 7 entités et leurs relations :
 
 ## 🧱 Architecture générale
 
-L'application suit une **architecture MVC en couches** inspirée du pattern Symfony que les étudiants connaissent déjà :
+L'application suit une **architecture web Distribuée avec un backend RESTFul monolithique** inspirée du pattern Symfony que les étudiants connaissent déjà :
+
+![JobBoard RESTful Architecture](https://github.com/badi3a/AWD-Training/blob/W01-Developper_MicroService/documentation/l'architecture%20globale.png))
+
+*Figure 1. Monolithic RESTful architecture of the JobBoard application.*
 
 ```
-┌─────────────────────────────────────────────────┐
-│                CLIENT (Frontend)                │
-│           Navigateur · Postman · curl           │
-└───────────────────────┬─────────────────────────┘
-                        ▼ HTTP
-┌─────────────────────────────────────────────────┐
-│                     ROUTES                      │
-│      Définit les URI + méthodes HTTP            │
-│      (candidateRoutes.js, addressRoutes.js)     │
-└───────────────────────┬─────────────────────────┘
-                        ▼
-┌─────────────────────────────────────────────────┐
-│                  MIDDLEWARES                    │
-│    Validation · Sécurité · Logging · CORS       │
-└───────────────────────┬─────────────────────────┘
-                        ▼
-┌─────────────────────────────────────────────────┐
-│                  CONTROLLERS                    │
-│   Traite req/res · Renvoie les codes HTTP       │
-└───────────────────────┬─────────────────────────┘
-                        ▼
-┌─────────────────────────────────────────────────┐
-│                    SERVICES                     │
-│  Logique métier · Règles d'unicité · Erreurs    │
-└───────────────────────┬─────────────────────────┘
-                        ▼
-┌─────────────────────────────────────────────────┐
-│                     MODELS                      │
-│         Requêtes SQL manuelles (mysql2)         │
-└───────────────────────┬─────────────────────────┘
-                        ▼
-┌─────────────────────────────────────────────────┐
-│                      MySQL                      │
-│              Base `jobboard` · UTF-8            │
-└─────────────────────────────────────────────────┘
+
 ```
 
 Chaque couche a une **responsabilité unique** (Single Responsibility Principle du SOLID). Ce cloisonnement facilite la maintenance et permet aux étudiants de comprendre où intervenir pour chaque type de modification.
