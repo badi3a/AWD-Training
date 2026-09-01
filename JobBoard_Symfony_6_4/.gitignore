@@ -1,0 +1,7 @@
+/.env.local
+/.env.*.local
+/vendor/
+/var/
+/public/uploads/*
+!/public/uploads/.gitkeep
+/phpunit.xml

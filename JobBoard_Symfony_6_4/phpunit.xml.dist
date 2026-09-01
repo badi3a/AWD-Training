@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><phpunit bootstrap="vendor/autoload.php" colors="true"><php><server name="APP_ENV" value="test" force="true"/><server name="KERNEL_CLASS" value="App\Kernel"/></php><testsuites><testsuite name="Project Test Suite"><directory>tests</directory></testsuite></testsuites></phpunit>

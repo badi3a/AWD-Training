@@ -1,0 +1,1 @@
+{% extends 'base.html.twig' %}{% block body %}<h1>My applications</h1><section class="cards">{% for a in applications %}<article><h2>{{ a.job.title }}</h2><p>{{ a.job.company.name }}</p><span>{{ a.status }}</span><small>{{ a.submittedAt|date('Y-m-d H:i') }}</small></article>{% else %}<p>No applications yet.</p>{% endfor %}</section>{% endblock %}

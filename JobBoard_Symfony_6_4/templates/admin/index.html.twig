@@ -1,0 +1,1 @@
+{% extends 'base.html.twig' %}{% block body %}<h1>Administration dashboard</h1><section class="stats">{% for label,value in counts %}<article><b>{{ value }}</b><span>{{ label|capitalize }}</span></article>{% endfor %}</section>{% endblock %}

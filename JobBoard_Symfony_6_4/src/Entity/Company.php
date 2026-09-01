@@ -1,0 +1,7 @@
+<?php
+declare(strict_types=1); namespace App\Entity;
+use App\Repository\CompanyRepository; use Doctrine\Common\Collections\ArrayCollection; use Doctrine\Common\Collections\Collection; use Doctrine\ORM\Mapping as ORM;
+#[ORM\Entity(repositoryClass:CompanyRepository::class)] class Company {
+ #[ORM\Id,ORM\GeneratedValue,ORM\Column] private ?int $id=null; #[ORM\Column(length:150)] private string $name=''; #[ORM\Column(type:'text',nullable:true)] private ?string $description=null; #[ORM\Column(length:120,nullable:true)] private ?string $city=null;
+ #[ORM\OneToOne,ORM\JoinColumn(nullable:false,onDelete:'CASCADE')] private ?User $owner=null; #[ORM\OneToMany(mappedBy:'company',targetEntity:Job::class,cascade:['persist'],orphanRemoval:true)] private Collection $jobs;
+ public function __construct(){ $this->jobs=new ArrayCollection(); } public function getId():?int{return $this->id;} public function getName():string{return $this->name;} public function setName(string $v):self{$this->name=$v;return $this;} public function getDescription():?string{return $this->description;} public function setDescription(?string $v):self{$this->description=$v;return $this;} public function getCity():?string{return $this->city;} public function setCity(?string $v):self{$this->city=$v;return $this;} public function getOwner():?User{return $this->owner;} public function setOwner(User $v):self{$this->owner=$v;return $this;} public function getJobs():Collection{return $this->jobs;} }

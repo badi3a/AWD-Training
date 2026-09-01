@@ -1,0 +1,3 @@
+<?php
+declare(strict_types=1); namespace App\Service; use App\Entity\Application; use App\Entity\Candidate; use App\Entity\Job; use Doctrine\ORM\EntityManagerInterface;
+final class ApplicationManager { public function __construct(private EntityManagerInterface $em){} public function apply(Candidate $candidate,Job $job,?string $letter):Application { if(!$job->isPublished())throw new \DomainException('The job is not open.'); $existing=$this->em->getRepository(Application::class)->findOneBy(['candidate'=>$candidate,'job'=>$job]); if($existing)throw new \DomainException('The candidate has already applied.'); $a=(new Application())->setCandidate($candidate)->setJob($job)->setCoverLetter($letter); $this->em->persist($a);$this->em->flush();return $a; } }

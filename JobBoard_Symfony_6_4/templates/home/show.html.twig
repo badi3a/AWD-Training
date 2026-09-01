@@ -1,0 +1,1 @@
+{% extends 'base.html.twig' %}{% block title %}{{ job.title }}{% endblock %}{% block body %}<article class="detail"><h1>{{ job.title }}</h1><p><b>{{ job.company.name }}</b> · {{ job.location }}</p><p>{{ job.description }}</p>{% if is_granted('ROLE_CANDIDATE') %}<a class="button" href="{{ path('candidate_apply',{id:job.id}) }}">Apply</a>{% endif %}</article>{% endblock %}
