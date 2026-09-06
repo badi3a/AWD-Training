@@ -1,482 +1,209 @@
-# Prosit 01 — Architectural Diagnosis of JobBoard
+# 🌐 Prosit 1 — Diagnostic architectural de l’application JobBoard
 
-## Distributed Web Applications
-
-This repository contains the **JobBoard Symfony 6.4 monolithic application** used in Prosit 01 of the Distributed Web Applications module.
-
-The objective of this activity is **not to immediately transform the application into microservices**. The objective is to examine an existing application, collect evidence from its source code, identify architectural constraints, and produce a clear and justified diagnosis.
-
-> **Important:** Work individually before the classroom session. The individual diagnosis will be used as the starting point for team discussion and consolidation in class.
+**Module : Applications Web Distribuées (AWD)**  
+**Chapitre 1 : Introduction aux architectures distribuées**  
+**Année universitaire : 2026–2027**  
+**Public : 4e année — Cycle Ingénieur en Informatique**  
+**École : ESPRIT — École d’Ingénieurs**
 
 ---
 
-## 1. Learning objectives
+## 🎯 Objectifs du Prosit
 
-By completing this Prosit, you should be able to:
+Ce Prosit constitue la première situation-problème du module **Applications Web Distribuées**. Il invite les étudiants à analyser l’application **JobBoard** et à établir un diagnostic argumenté de son architecture monolithique dans un contexte de croissance.
 
-- describe the main characteristics of a monolithic architecture;
-- map the functional and technical structure of an existing Symfony MVC application;
-- distinguish facts, symptoms, causes, impacts, and assumptions;
-- identify architectural coupling in code, data, deployment, and organization;
-- explain the limitations of a monolith in a growth context;
-- translate business ambitions into functional requirements, quality attributes, and constraints;
-- prioritize architectural problems using evidence;
-- use an AI assistant critically without replacing your own analysis;
-- produce a concise and evidence-based architectural diagnosis.
+À l’issue du Prosit, les étudiants seront capables de :
 
----
-
-## 2. Case context
-
-JobBoard is an employment platform that connects candidates and recruiters. The current solution is implemented as a **Symfony 6.4 MVC monolith**.
-
-The application includes several functional areas:
-
-- user and authentication management;
-- candidate profiles and skills;
-- company profiles;
-- job publication and search;
-- job applications;
-- administration;
-- shared security, configuration, persistence, and deployment mechanisms.
-
-The project uses:
-
-- PHP 8.2 or later;
-- Symfony 6.4;
-- Doctrine ORM;
-- Twig;
-- Symfony Security;
-- a shared relational database;
-- one source-code repository;
-- one application runtime;
-- one deployment unit.
-
-These characteristics form the baseline that you must analyze.
+- expliquer l’évolution des architectures logicielles vers les architectures distribuées modernes ;
+- distinguer les architectures **monolithique**, **N-tiers**, **SOA** et **Microservices** ;
+- identifier les avantages et les limites d’une architecture monolithique ;
+- analyser les besoins métier et les contraintes techniques qui peuvent justifier une évolution architecturale ;
+- reconnaître les caractéristiques fondamentales d’un système distribué ;
+- expliquer le rôle des services Web dans l’interopérabilité entre applications ;
+- formuler un diagnostic architectural fondé sur des arguments techniques et métier.
 
 ---
 
-## 3. Your mission
+## 📚 Prérequis
 
-You are acting as a **junior software architecture consultant**.
-
-Your mission is to answer the following question:
-
-> What architectural characteristics of the current JobBoard application may limit its ability to evolve, scale, remain available, and support several teams?
-
-Your work must be based on concrete evidence from the repository. Avoid generic statements such as:
-
-- “Monoliths are always bad.”
-- “Microservices are always scalable.”
-- “The application must be migrated to the cloud.”
-
-A strong diagnosis explains:
-
-1. what is currently observed;
-2. why it may become a problem;
-3. who or what is affected;
-4. what evidence supports the conclusion;
-5. what additional information is still required.
+- notions de base en **programmation orientée objet** ;
+- compréhension du patron architectural **MVC** ;
+- notions générales sur les applications Web ;
+- capacité à lire un diagramme d’architecture ou un diagramme de classes ;
+- aptitude à travailler en équipe et à rechercher des informations techniques fiables.
 
 ---
 
-## 4. Rules for the individual asynchronous work
+## 🧩 Situation-problème
 
-Before the classroom session:
+**JobBoard** est une plateforme de recrutement qui centralise plusieurs fonctionnalités métier, notamment :
 
-- work individually;
-- inspect the source code without modifying it;
-- take notes while exploring the project;
-- record file paths, class names, relationships, and configuration elements as evidence;
-- distinguish observations from interpretations;
-- complete the individual diagnosis provided in Blackboard;
-- export or save your diagnosis before coming to class.
+- la gestion des candidats ;
+- la gestion des entreprises ;
+- la publication des offres d’emploi ;
+- le suivi des candidatures ;
+- l’organisation des entretiens ;
+- l’envoi de notifications.
 
-Do not start designing the target microservices architecture during this phase. First diagnose the current state.
+La première version de JobBoard repose sur une **architecture monolithique** : les fonctionnalités sont développées, déployées et exploitées comme une seule application, avec une base de données partagée.
 
----
+Avec l’augmentation du nombre d’utilisateurs, des fonctionnalités, des intégrations et des équipes de développement, plusieurs difficultés peuvent apparaître :
 
-## 5. Recommended analysis path
+- temps de maintenance plus important ;
+- couplage entre les modules ;
+- déploiement global pour une modification locale ;
+- difficulté à faire évoluer ou dimensionner une fonctionnalité indépendamment ;
+- risque qu’une défaillance affecte l’ensemble de l’application ;
+- coordination plus complexe entre les équipes ;
+- augmentation de la dette technique.
 
-### Step 1 — Understand the project structure
+### ❓ Problématique centrale
 
-Start by examining the main directories:
+> **L’architecture monolithique de JobBoard reste-t-elle adaptée aux nouveaux besoins de l’application, ou faut-il envisager une évolution vers une architecture distribuée ?**
 
-```text
-src/Controller/
-src/Entity/
-src/Repository/
-src/Service/
-src/DataFixtures/
-config/packages/
-templates/
-public/
-```
-
-Questions to consider:
-
-- Are functional areas physically separated?
-- Which technical elements are shared?
-- Which directories contain business logic?
-- Does the project reveal clear module boundaries?
-
-### Step 2 — Map the functional areas
-
-Identify the main features handled by the application.
-
-Look at:
-
-- controllers;
-- entities;
-- services;
-- templates;
-- routes;
-- roles and access-control rules.
-
-Create a preliminary functional map. For example, determine which files relate to candidates, companies, jobs, applications, and administration.
-
-### Step 3 — Examine the domain model
-
-Inspect the Doctrine entities in `src/Entity/`.
-
-Focus on:
-
-- relationships between entities;
-- shared identifiers;
-- bidirectional associations;
-- cascade operations;
-- ownership of data;
-- constraints that span several functional areas.
-
-Questions to consider:
-
-- Which entities depend directly on other domains?
-- Can one functional area evolve without changing another?
-- Which data would be difficult to separate?
-- Which transactions currently depend on a single database?
-
-### Step 4 — Analyze security and identity
-
-Inspect:
-
-```text
-config/packages/security.yaml
-src/Entity/User.php
-src/Controller/SecurityController.php
-```
-
-Questions to consider:
-
-- Is identity centralized?
-- Are candidate, company, and administrator roles managed by the same security model?
-- What would be affected if authentication failed?
-- Which future services would depend on the same user information?
-
-### Step 5 — Analyze business coupling
-
-Inspect:
-
-```text
-src/Service/ApplicationManager.php
-src/Controller/CandidateController.php
-src/Controller/CompanyController.php
-```
-
-Look for:
-
-- direct object references;
-- synchronous method calls;
-- shared database transactions;
-- repository access across functional areas;
-- assumptions about immediate consistency.
-
-For every coupling observation, record:
-
-```text
-Evidence:
-Architectural interpretation:
-Potential impact:
-Information still missing:
-```
-
-### Step 6 — Examine deployment and runtime assumptions
-
-Use the project structure and configuration to identify the deployment model.
-
-Questions to consider:
-
-- How many deployable applications are present?
-- Can the search feature be deployed independently?
-- Can the application feature be scaled independently?
-- Do all features share the same PHP runtime?
-- Do all features depend on the same database?
-- What is the possible impact of one critical defect?
-
-### Step 7 — Identify missing capabilities
-
-The baseline intentionally does not include:
-
-- a public REST API;
-- asynchronous messaging;
-- independent services;
-- service discovery;
-- API Gateway;
-- distributed tracing;
-- centralized observability;
-- container orchestration;
-- cloud deployment configuration;
-- shared object storage.
-
-Do not automatically classify every missing element as a defect. Decide whether it is needed based on the case requirements.
+L’objectif n’est pas de conclure automatiquement que les Microservices constituent la meilleure solution. L’équipe doit identifier les problèmes réels, analyser les contraintes et défendre une recommandation proportionnée au contexte.
 
 ---
 
-## 6. Evidence collection table
+## 🔎 Travail demandé
 
-Use the following structure in your notes:
+Les étudiants travaillent en équipe pour produire un diagnostic architectural structuré.
 
-| Observation | Evidence in the repository | Possible architectural cause | Potential impact | Confidence |
-|---|---|---|---|---|
-| Example: candidate application creation depends directly on Job and Candidate entities | `src/Service/ApplicationManager.php` | Cross-domain in-process coupling and shared transaction | Separation may require a new consistency strategy | Medium |
+### 1. Comprendre l’existant
 
-Your evidence may include:
+- identifier les principales fonctionnalités de JobBoard ;
+- repérer les modules métier et leurs dépendances ;
+- déterminer les éléments déployés ensemble ;
+- identifier les données partagées ;
+- décrire les échanges entre l’interface, la logique métier et la base de données.
 
-- a file path;
-- a class or method;
-- a Doctrine relationship;
-- a route;
-- a security rule;
-- a shared configuration;
-- a shared database assumption;
-- a deployment constraint.
+### 2. Analyser l’architecture monolithique
 
----
+- présenter ses avantages dans le contexte initial du projet ;
+- identifier ses limites face à la croissance ;
+- distinguer les problèmes fonctionnels, techniques, organisationnels et opérationnels ;
+- associer chaque problème à un élément observable ou à un scénario concret.
 
-## 7. From symptoms to architectural causes
+### 3. Comparer les styles architecturaux
 
-Do not confuse a symptom with its cause.
+Comparer les options suivantes :
 
-### Example
+- architecture monolithique ;
+- monolithe modulaire ;
+- architecture N-tiers ;
+- architecture orientée services, **SOA** ;
+- architecture Microservices.
 
-**Symptom**
+La comparaison doit considérer au minimum :
 
-> Job search becomes slow during traffic peaks.
+- le couplage ;
+- le déploiement ;
+- la maintenabilité ;
+- la scalabilité ;
+- la disponibilité ;
+- la gestion des données ;
+- la complexité opérationnelle ;
+- l’organisation des équipes.
 
-**Possible architectural cause**
+### 4. Formuler une recommandation
 
-> Search shares the same runtime and deployment unit as the rest of the application and cannot be scaled independently.
-
-**Potential impact**
-
-> Search load may consume resources required by unrelated functions.
-
-**Evidence required**
-
-> Deployment topology, runtime metrics, database queries, indexing strategy, and resource-consumption data.
-
-The example is an analytical pattern, not a final answer. The available source code alone may not prove production behavior. Clearly identify where operational evidence is missing.
-
----
-
-## 8. Dimensions to analyze
-
-Your diagnosis must cover more than code quality.
-
-### Technical dimension
-
-- coupling;
-- data ownership;
-- transaction boundaries;
-- scalability;
-- availability;
-- security;
-- maintainability;
-- deployability;
-- observability.
-
-### Organizational dimension
-
-- team ownership;
-- coordination cost;
-- shared repository conflicts;
-- release dependencies;
-- autonomy of functional teams.
-
-### Economic dimension
-
-- infrastructure use;
-- cost of incidents;
-- cost of delayed releases;
-- cost of migration;
-- operational complexity.
-
-### Business dimension
-
-- expansion;
-- partner integration;
-- service-level expectations;
-- time to market;
-- support for new capabilities.
+- déterminer si l’architecture actuelle peut être conservée, restructurée ou progressivement distribuée ;
+- justifier la décision en fonction des besoins de JobBoard ;
+- proposer une première représentation de l’architecture cible ;
+- identifier les risques et compromis associés à la proposition.
 
 ---
 
-## 9. Prioritization method
+## 💡 Questions directrices
 
-For each major problem, assess:
-
-- **Impact:** How serious is the consequence?
-- **Urgency:** How soon must it be addressed?
-- **Frequency:** How often does it occur?
-- **Evidence:** How strong is the supporting information?
-- **Uncertainty:** What is still unknown?
-- **Reversibility:** How difficult would a future change be?
-
-The goal is not to find one universally correct order. The goal is to justify your order.
-
----
-
-## 10. Critical use of the AI assistant
-
-Your initial analysis must be completed before asking an AI assistant for help.
-
-The AI assistant may be used to:
-
-- challenge your assumptions;
-- identify a missing perspective;
-- suggest counterarguments;
-- clarify architectural vocabulary;
-- propose questions that require additional evidence.
-
-The AI assistant must not be used to:
-
-- generate the complete diagnosis before you inspect the project;
-- replace source-code analysis;
-- make an architectural decision without context;
-- provide claims that you copy without verification.
-
-### Suggested prompt
-
-```text
-I am analyzing a Symfony 6.4 monolithic JobBoard application.
-I have identified the following observations and evidence: [insert your work].
-Challenge my architectural interpretation. Distinguish facts, assumptions,
-possible causes, and missing evidence. Do not choose an architecture for me.
-```
-
-For at least one useful AI claim, record:
-
-- the claim;
-- the independent source or project evidence used for verification;
-- your final judgment: accurate, partially accurate, out of context, or unsupported.
+- Quelles sont les caractéristiques qui permettent de qualifier JobBoard de monolithe ?
+- Quels avantages cette architecture apporte-t-elle au démarrage du projet ?
+- Quels signes montrent qu’une architecture devient difficile à faire évoluer ?
+- Une séparation logique en couches implique-t-elle nécessairement une architecture distribuée ?
+- Quelles fonctionnalités de JobBoard pourraient avoir des besoins de charge différents ?
+- Quelles conséquences un déploiement global peut-il avoir sur les délais et les risques ?
+- Comment une base de données partagée influence-t-elle le couplage des modules ?
+- Quels nouveaux problèmes apparaissent lorsqu’une application devient distribuée ?
+- Un monolithe modulaire pourrait-il répondre à une partie des difficultés ?
+- Quels éléments factuels faudrait-il mesurer avant de recommander une migration ?
 
 ---
 
-## 11. Expected individual deliverable
+## 📦 Livrables attendus
 
-Prepare a concise architectural diagnosis containing the following sections.
+Chaque équipe doit remettre :
 
-### 1. Current situation
+1. **Une présentation synthétique** du diagnostic architectural ;
+2. **Un schéma de l’architecture actuelle** de JobBoard ;
+3. **Un tableau comparatif** des architectures étudiées ;
+4. **Une recommandation argumentée** et adaptée au contexte ;
+5. **Un schéma d’évolution possible**, sans entrer dans l’implémentation détaillée ;
+6. **Une liste des sources consultées**.
 
-Describe the existing architecture and its main characteristics.
-
-### 2. Functional and technical map
-
-Identify the main functional areas and shared technical components.
-
-### 3. Three priority limitations
-
-For each limitation, provide:
-
-- the observation;
-- concrete evidence;
-- the architectural cause hypothesis;
-- the technical impact;
-- the organizational or business impact;
-- the confidence level.
-
-### 4. Required architectural qualities
-
-State the properties that a future architecture should improve, without selecting technologies too early.
-
-Examples of properties include:
-
-- independent scalability;
-- fault isolation;
-- interoperability;
-- deployment autonomy;
-- technology flexibility;
-- better observability.
-
-### 5. Missing information
-
-List the information needed before making a final recommendation.
-
-### 6. Critical AI reflection
-
-Summarize one AI-assisted discussion and explain how the response was verified.
+Le livrable doit mettre en évidence le raisonnement de l’équipe. Une recommandation non justifiée ou fondée uniquement sur la popularité d’une technologie n’est pas suffisante.
 
 ---
 
-## 12. Preparation for the classroom session
+## ✅ Critères de réussite
 
-Bring your individual diagnosis to class.
-
-During the classroom session, the team will:
-
-1. compare individual observations;
-2. identify agreements and disagreements;
-3. verify the strongest evidence;
-4. consolidate the functional map;
-5. prioritize the architectural tensions;
-6. formulate a shared diagnosis;
-7. discuss possible evolution options only after the diagnosis is validated;
-8. prepare a short argument for the review committee.
-
-The team deliverable must not be a simple merge of individual answers. The team must resolve contradictions and justify the final position.
+- compréhension correcte de l’architecture existante ;
+- distinction claire entre architecture en couches et architecture distribuée ;
+- identification pertinente des avantages et limites du monolithe ;
+- comparaison équilibrée des styles architecturaux ;
+- prise en compte des besoins métier et des contraintes techniques ;
+- recommandation cohérente, progressive et argumentée ;
+- qualité et lisibilité des schémas ;
+- participation équilibrée des membres de l’équipe ;
+- utilisation de sources fiables et correctement citées.
 
 ---
 
-## 13. Self-assessment checklist
+## 🛠️ Outils recommandés
 
-Before submitting your individual work, verify that:
+Le Prosit n’impose aucun outil particulier. Les équipes peuvent utiliser :
 
-- [ ] I inspected the source code.
-- [ ] I recorded precise file paths or class names.
-- [ ] I distinguished facts from assumptions.
-- [ ] I separated symptoms, causes, and impacts.
-- [ ] I analyzed technical, organizational, economic, and business dimensions.
-- [ ] I identified missing information.
-- [ ] I did not assume that microservices are automatically the solution.
-- [ ] I expressed required architectural qualities before technologies.
-- [ ] I critically verified any AI-generated claim.
-- [ ] My diagnosis is concise, structured, and evidence-based.
+- [Microsoft PowerPoint](https://www.microsoft.com/microsoft-365/powerpoint) ou un outil équivalent pour la présentation ;
+- [diagrams.net](https://www.diagrams.net/) pour les schémas d’architecture ;
+- [PlantUML](https://plantuml.com/) ou [Mermaid](https://mermaid.js.org/) pour les diagrammes textuels ;
+- un espace collaboratif, un dépôt Git ou un document partagé pour organiser le travail ;
+- des sources académiques, documentations techniques et ouvrages spécialisés pour étayer l’analyse.
 
 ---
 
-## 14. Running the project locally
+## 📂 Ressources pédagogiques
 
-The installation and demonstration commands are documented in the technical project README. The essential commands are:
+- [Support du Chapitre 1 — Introduction aux architectures distribuées](https://esprit.blackboard.com)
+- [Guide enseignant du Prosit 1](https://github.com/badi3a/AWD-Training/blob/Prosit_01/Prosit.pdf)
 
-```bash
-composer install
-php bin/console doctrine:database:create --if-not-exists
-php bin/console doctrine:schema:create
-php bin/console doctrine:fixtures:load --no-interaction
-php -S 127.0.0.1:8000 -t public
-```
-
-The project can be analyzed without changing its code. Running it locally is useful for understanding routes, roles, screens, and runtime behavior.
 
 ---
 
-## 15. Repository branch
+## 🤝 Organisation du travail en équipe
 
-The Prosit source code is available in the dedicated branch:
-
-[Open the Prosit_01 branch](https://github.com/badi3a/AWD-Training/tree/Prosit_01)
+- constituer une équipe de **3 à 5 étudiants** ;
+- répartir les rôles : animation, recherche, analyse, modélisation et restitution ;
+- confronter les hypothèses avant de sélectionner une solution ;
+- conserver une trace des sources et des décisions ;
+- préparer une restitution où chaque membre peut expliquer le diagnostic et la recommandation.
 
 ---
 
-## Academic integrity
 
-The diagnosis must represent your own reasoning. Sources and AI assistance must be acknowledged. Unsupported generic recommendations will not be considered evidence-based architectural analysis.
+## 📝 Conseil méthodologique
+
+> **Ne commencez pas par choisir une technologie. Commencez par caractériser le problème, les contraintes et les qualités attendues.**
+
+Une architecture distribuée peut améliorer l’autonomie, le déploiement et la scalabilité, mais elle introduit également des coûts : communication réseau, pannes partielles, cohérence des données, observabilité, sécurité et complexité opérationnelle.
+
+**Bon travail et bon diagnostic architectural !**
+---
+
+## 🏫 Cadre pédagogique
+
+### Enseignante
+
+- [Badia Bouhdid](https://www.linkedin.com/in/badiabouhdid)
+
+Ce Prosit est proposé dans le cadre du module **Applications Web Distribuées** à l’[École d’Ingénieurs ESPRIT](https://www.esprit.tn). Il s’inscrit dans une démarche d’**apprentissage par problèmes**, dans laquelle les étudiants analysent une situation, recherchent les connaissances nécessaires, confrontent leurs propositions et construisent une réponse argumentée.
+
+
