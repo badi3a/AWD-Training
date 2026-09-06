@@ -1,6 +1,6 @@
 
 # 🚀 Architecture Microservices : Du Monolithe vers l'Écosystème Distribué
-📅 **Année universitaire : 2025–2026** 
+📅 **Année universitaire : 2026–2027** 
 
 
 Ce dépôt contient l'ensemble des ressources pédagogiques et techniques pour le module de développement d'architectures microservices. 
