@@ -6,18 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="notification" />
         <module name="config-server" />
-        <module name="eureka" />
+        <module name="discovery" />
+        <module name="canditature" />
         <module name="candidat" />
         <module name="ConfigServer" />
         <module name="Job" />
+        <module name="job" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="condidature" target="1.5" />
+      <module name="eureka" target="1.5" />
       <module name="meeting" target="1.5" />
+      <module name="notification" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -25,12 +28,15 @@
       <module name="ConfigServer" options="-parameters" />
       <module name="Job" options="-parameters" />
       <module name="candidat" options="-parameters" />
+      <module name="canditature" options="-parameters" />
       <module name="condidature" options="" />
       <module name="config-server" options="-parameters" />
-      <module name="eureka" options="-parameters" />
+      <module name="discovery" options="-parameters" />
+      <module name="eureka" options="" />
       <module name="gateway" options="-parameters" />
+      <module name="job" options="-parameters" />
       <module name="meeting" options="" />
-      <module name="notification" options="-parameters" />
+      <module name="notification" options="" />
     </option>
   </component>
 </project>

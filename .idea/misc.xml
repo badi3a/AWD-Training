@@ -14,6 +14,9 @@
         <option value="$PROJECT_DIR$/backEnd/microservices/condidature/pom.xml" />
         <option value="$PROJECT_DIR$/backEnd/ConfigServer/pom.xml" />
         <option value="$PROJECT_DIR$/backEnd/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/candidat/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/microservices/canditature/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/discovery/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

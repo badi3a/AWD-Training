@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="notification" />
-        <module name="candidat" />
         <module name="job" />
-        <module name="meeting" />
+        <module name="candidat" />
         <module name="canditature" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="meeting" target="17" />
+      <module name="notification" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

@@ -1,7 +1,7 @@
 # Workshop 3 – Implémentation de l’API Gateway
 
 🎓 **Formation : Microservices**  
-📅 **Année universitaire : 2025–2026**  
+📅 **Année universitaire : 2026–2027**  
 🧑‍💻 **Workshop 3**
 
 ---
