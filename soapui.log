@@ -1,0 +1,3 @@
+2026-10-05 15:25:41,839 WARN  [DefaultSoapUICore] Missing folder [C:\Users\hp\ext] for external libraries
+2026-10-05 15:25:42,225 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\hp\soapui-settings.xml]
+2026-10-05 15:25:43,000 INFO  [WorkspaceImpl] Loading workspace from [C:\Users\hp\intellij-soapui-workspace.xml]

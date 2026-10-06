@@ -18,7 +18,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="condidature" target="1.5" />
-      <module name="eureka" target="1.5" />
+      <module name="eureka" target="17" />
       <module name="meeting" target="1.5" />
       <module name="notification" target="1.5" />
     </bytecodeTargetLevel>
@@ -32,7 +32,7 @@
       <module name="condidature" options="" />
       <module name="config-server" options="-parameters" />
       <module name="discovery" options="-parameters" />
-      <module name="eureka" options="" />
+      <module name="eureka" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="job" options="-parameters" />
       <module name="meeting" options="" />
