@@ -1,31 +1,4 @@
-# Dépendances
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Fichiers d'environnement — NE JAMAIS COMMITTER LES VRAIS SECRETS
-.env
-.env.local
-.env.production
-.env.development.local
-
-# Éditeurs / OS
-.vscode/
+target/
 .idea/
-.DS_Store
-Thumbs.db
-*.swp
-
-# Logs
-logs/
-*.log
-
-# Coverage / tests
-coverage/
-.nyc_output/
-
-# Divers
-dist/
-build/
-tmp/
+*.iml
+.vscode/

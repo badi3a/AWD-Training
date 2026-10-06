@@ -9,14 +9,19 @@
         <module name="notification" />
         <module name="config-server" />
         <module name="eureka" />
-        <module name="candidat" />
         <module name="ConfigServer" />
         <module name="Job" />
+        <module name="awd-monolith" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="candidat" target="17" />
+      <module name="canditature" target="17" />
       <module name="condidature" target="1.5" />
+      <module name="discovery" target="17" />
+      <module name="gateway" target="17" />
+      <module name="job" target="17" />
       <module name="meeting" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -24,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ConfigServer" options="-parameters" />
       <module name="Job" options="-parameters" />
+      <module name="awd-monolith" options="-parameters" />
       <module name="candidat" options="-parameters" />
       <module name="condidature" options="" />
       <module name="config-server" options="-parameters" />

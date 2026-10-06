@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/backEnd/ConfigServer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/config-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/eureka/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/gateway/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/microservices/Job/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/microservices/candidat/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/microservices/condidature/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/microservices/meeting/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/microservices/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/ConfigServer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/config-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/microservices/candidat/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/microservices/condidature/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/microservices/job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/microservices/meeting/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/microservices/notification/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/java" charset="UTF-8" />
   </component>
 </project>

@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/backEnd/microservices/condidature/pom.xml" />
         <option value="$PROJECT_DIR$/backEnd/ConfigServer/pom.xml" />
         <option value="$PROJECT_DIR$/backEnd/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
