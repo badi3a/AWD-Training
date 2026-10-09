@@ -1,209 +1,126 @@
-# 🌐 Prosit 1 — Diagnostic architectural de l’application JobBoard
+<div align="center">
 
-**Module : Applications Web Distribuées (AWD)**  
-**Chapitre 1 : Introduction aux architectures distribuées**  
-**Année universitaire : 2026–2027**  
-**Public : 4e année — Cycle Ingénieur en Informatique**  
-**École : ESPRIT — École d’Ingénieurs**
+# Distributed Web Applications (AWD)
 
----
+**Course materials and problem-based learning activities**
 
-## 🎯 Objectifs du Prosit
+ESPRIT School of Engineering · 4th-year Computer Engineering Program · Academic year 2026–2027
 
-Ce Prosit constitue la première situation-problème du module **Applications Web Distribuées**. Il invite les étudiants à analyser l’application **JobBoard** et à établir un diagnostic argumenté de son architecture monolithique dans un contexte de croissance.
+[![Module](https://img.shields.io/badge/module-AWD-7E0C6E)](#about-the-module)
+[![Academic year](https://img.shields.io/badge/academic%20year-2026--2027-A5559A)](#about-the-module)
+[![Approach](https://img.shields.io/badge/approach-problem--based%20learning-CB9EC5)](#how-we-learn-prosits)
+[![Language](https://img.shields.io/badge/language-English-555555)](#)
 
-À l’issue du Prosit, les étudiants seront capables de :
-
-- expliquer l’évolution des architectures logicielles vers les architectures distribuées modernes ;
-- distinguer les architectures **monolithique**, **N-tiers**, **SOA** et **Microservices** ;
-- identifier les avantages et les limites d’une architecture monolithique ;
-- analyser les besoins métier et les contraintes techniques qui peuvent justifier une évolution architecturale ;
-- reconnaître les caractéristiques fondamentales d’un système distribué ;
-- expliquer le rôle des services Web dans l’interopérabilité entre applications ;
-- formuler un diagnostic architectural fondé sur des arguments techniques et métier.
+</div>
 
 ---
 
-## 📚 Prérequis
+## About the module
 
-- notions de base en **programmation orientée objet** ;
-- compréhension du patron architectural **MVC** ;
-- notions générales sur les applications Web ;
-- capacité à lire un diagramme d’architecture ou un diagramme de classes ;
-- aptitude à travailler en équipe et à rechercher des informations techniques fiables.
+Modern applications are rarely a single program running on a single server. They are used from browsers, phones and
+desktop tools, they talk to partner systems, and they must keep working while thousands of people use them at the same
+time. **Distributed Web Applications** explores how such systems are designed: how their parts are separated, how they
+communicate, and which trade-offs come with each architectural choice.
 
----
-
-## 🧩 Situation-problème
-
-**JobBoard** est une plateforme de recrutement qui centralise plusieurs fonctionnalités métier, notamment :
-
-- la gestion des candidats ;
-- la gestion des entreprises ;
-- la publication des offres d’emploi ;
-- le suivi des candidatures ;
-- l’organisation des entretiens ;
-- l’envoi de notifications.
-
-La première version de JobBoard repose sur une **architecture monolithique** : les fonctionnalités sont développées, déployées et exploitées comme une seule application, avec une base de données partagée.
-
-Avec l’augmentation du nombre d’utilisateurs, des fonctionnalités, des intégrations et des équipes de développement, plusieurs difficultés peuvent apparaître :
-
-- temps de maintenance plus important ;
-- couplage entre les modules ;
-- déploiement global pour une modification locale ;
-- difficulté à faire évoluer ou dimensionner une fonctionnalité indépendamment ;
-- risque qu’une défaillance affecte l’ensemble de l’application ;
-- coordination plus complexe entre les équipes ;
-- augmentation de la dette technique.
-
-### ❓ Problématique centrale
-
-> **L’architecture monolithique de JobBoard reste-t-elle adaptée aux nouveaux besoins de l’application, ou faut-il envisager une évolution vers une architecture distribuée ?**
-
-L’objectif n’est pas de conclure automatiquement que les Microservices constituent la meilleure solution. L’équipe doit identifier les problèmes réels, analyser les contraintes et défendre une recommandation proportionnée au contexte.
+Throughout the module, a single running example, **JobBoard**, an online recruitment platform, helps connect the
+concepts from one chapter to the next.
 
 ---
 
-## 🔎 Travail demandé
+## Repository organisation
 
-Les étudiants travaillent en équipe pour produire un diagnostic architectural structuré.
+Each chapter lives in **its own branch**. The `main` branch is the entry point: it presents the module and points to
+the chapters as they become available.
 
-### 1. Comprendre l’existant
+| [`chapter-01`](https://github.com/badi3a/AWD-Training/tree/chapter-01) | Introduction to Distributed Architectures and SOA | Course slides, Prosit 1 | Available |
 
-- identifier les principales fonctionnalités de JobBoard ;
-- repérer les modules métier et leurs dépendances ;
-- déterminer les éléments déployés ensemble ;
-- identifier les données partagées ;
-- décrire les échanges entre l’interface, la logique métier et la base de données.
 
-### 2. Analyser l’architecture monolithique
+To open a chapter, select its branch on GitHub, or from a terminal:
 
-- présenter ses avantages dans le contexte initial du projet ;
-- identifier ses limites face à la croissance ;
-- distinguer les problèmes fonctionnels, techniques, organisationnels et opérationnels ;
-- associer chaque problème à un élément observable ou à un scénario concret.
-
-### 3. Comparer les styles architecturaux
-
-Comparer les options suivantes :
-
-- architecture monolithique ;
-- monolithe modulaire ;
-- architecture N-tiers ;
-- architecture orientée services, **SOA** ;
-- architecture Microservices.
-
-La comparaison doit considérer au minimum :
-
-- le couplage ;
-- le déploiement ;
-- la maintenabilité ;
-- la scalabilité ;
-- la disponibilité ;
-- la gestion des données ;
-- la complexité opérationnelle ;
-- l’organisation des équipes.
-
-### 4. Formuler une recommandation
-
-- déterminer si l’architecture actuelle peut être conservée, restructurée ou progressivement distribuée ;
-- justifier la décision en fonction des besoins de JobBoard ;
-- proposer une première représentation de l’architecture cible ;
-- identifier les risques et compromis associés à la proposition.
+```bash
+git clone https://github.com/badi3a/AWD-Training.git
+cd AWD-Training
+git switch chapter-01
+```
 
 ---
 
-## 💡 Questions directrices
+## Chapter 1 — Introduction to Distributed Architectures and SOA
 
-- Quelles sont les caractéristiques qui permettent de qualifier JobBoard de monolithe ?
-- Quels avantages cette architecture apporte-t-elle au démarrage du projet ?
-- Quels signes montrent qu’une architecture devient difficile à faire évoluer ?
-- Une séparation logique en couches implique-t-elle nécessairement une architecture distribuée ?
-- Quelles fonctionnalités de JobBoard pourraient avoir des besoins de charge différents ?
-- Quelles conséquences un déploiement global peut-il avoir sur les délais et les risques ?
-- Comment une base de données partagée influence-t-elle le couplage des modules ?
-- Quels nouveaux problèmes apparaissent lorsqu’une application devient distribuée ?
-- Un monolithe modulaire pourrait-il répondre à une partie des difficultés ?
-- Quels éléments factuels faudrait-il mesurer avant de recommander une migration ?
+<p align="center">
+  <img src="assets/chapter-01-cover.png" alt="Chapter 1 title slide: Introduction to Distributed Architectures and SOA" width="720">
+</p>
 
----
+The first chapter sets the scene for the whole module. It follows the story of software architectures, from the
+mainframe era to today's cloud-native systems, and shows that each new style appeared as an answer to the limits of the
+previous one.
 
-## 📦 Livrables attendus
+By the end of the chapter, students will be able to:
 
-Chaque équipe doit remettre :
+- explain how software architectures have evolved over time;
+- distinguish the main architectural styles: **monolith**, **N-tier**, **SOA** and **microservices**;
+- identify the limits of a monolithic architecture as an application grows;
+- understand the basic principles of distributed systems;
+- explain the role of Web services in making applications work together;
+- describe the main ideas behind a **RESTful** architecture.
 
-1. **Une présentation synthétique** du diagnostic architectural ;
-2. **Un schéma de l’architecture actuelle** de JobBoard ;
-3. **Un tableau comparatif** des architectures étudiées ;
-4. **Une recommandation argumentée** et adaptée au contexte ;
-5. **Un schéma d’évolution possible**, sans entrer dans l’implémentation détaillée ;
-6. **Une liste des sources consultées**.
-
-Le livrable doit mettre en évidence le raisonnement de l’équipe. Une recommandation non justifiée ou fondée uniquement sur la popularité d’une technologie n’est pas suffisante.
+The message of the chapter is simple: there is no "best" architecture in absolute terms, only architectures that fit a
+given context.
 
 ---
 
-## ✅ Critères de réussite
+## How we learn: Prosits
 
-- compréhension correcte de l’architecture existante ;
-- distinction claire entre architecture en couches et architecture distribuée ;
-- identification pertinente des avantages et limites du monolithe ;
-- comparaison équilibrée des styles architecturaux ;
-- prise en compte des besoins métier et des contraintes techniques ;
-- recommandation cohérente, progressive et argumentée ;
-- qualité et lisibilité des schémas ;
-- participation équilibrée des membres de l’équipe ;
-- utilisation de sources fiables et correctement citées.
+Alongside the lectures, the module relies on **problem-based learning**. A *Prosit* is a realistic situation in which
+students, working in small teams, identify the problem, search for the knowledge they need, test their hypotheses and
+build a well-argued answer, with the guidance of a tutor.
 
----
+Each Prosit follows three steps:
 
-## 🛠️ Outils recommandés
-
-Le Prosit n’impose aucun outil particulier. Les équipes peuvent utiliser :
-
-- [Microsoft PowerPoint](https://www.microsoft.com/microsoft-365/powerpoint) ou un outil équivalent pour la présentation ;
-- [diagrams.net](https://www.diagrams.net/) pour les schémas d’architecture ;
-- [PlantUML](https://plantuml.com/) ou [Mermaid](https://mermaid.js.org/) pour les diagrammes textuels ;
-- un espace collaboratif, un dépôt Git ou un document partagé pour organiser le travail ;
-- des sources académiques, documentations techniques et ouvrages spécialisés pour étayer l’analyse.
+1. **Opening session** — discover the situation, define the keywords, state the problem and the hypotheses.
+2. **Self-directed work** — investigate, analyse and gather evidence as a team.
+3. **Closing session** — present the findings, compare viewpoints and build a shared synthesis.
 
 ---
 
-## 📂 Ressources pédagogiques
+## Prosit 1 — JobBoard: a monolith facing the multi-device challenge
 
-- [Support du Chapitre 1 — Introduction aux architectures distribuées](https://esprit.blackboard.com)
-- [Guide enseignant du Prosit 1](https://github.com/badi3a/AWD-Training/blob/Prosit_01/Prosit.pdf)
+JobBoard started as a simple Web application and has become a success. Users now want to reach it from their phones,
+business clients ask for a desktop tool, and the platform must handle more and more activity. The team behind it
+realises that the application, built as a single block, finds it hard to keep up with these changes.
 
+In this Prosit, students take on the role of an audit team. Their mission is to:
+
+- understand what the application does, who uses it and how;
+- explain why its current architecture makes change difficult;
+- identify the limits it meets as new needs appear;
+- propose a gradual, well-justified direction for its evolution.
+
+The goal is not to jump to a fashionable solution, but to reason carefully: understand the problem first, weigh the
+benefits and the costs of each option, and recommend what truly fits JobBoard's situation.
+
+> **A piece of advice:** do not start by choosing a technology. Start by understanding the problem, the constraints
+> and the qualities that matter.
+
+The full Prosit brief is available in the [`chapter-01`](https://github.com/badi3a/AWD-Training/tree/chapter-01) branch.
 
 ---
 
-## 🤝 Organisation du travail en équipe
+## Learning resources
 
-- constituer une équipe de **3 à 5 étudiants** ;
-- répartir les rôles : animation, recherche, analyse, modélisation et restitution ;
-- confronter les hypothèses avant de sélectionner une solution ;
-- conserver une trace des sources et des décisions ;
-- préparer une restitution où chaque membre peut expliquer le diagnostic et la recommandation.
+- Course slides and interactive modules: available on the ESPRIT Blackboard space of the module.
+- Chapter materials and Prosit briefs: in the corresponding chapter branch of this repository.
 
 ---
 
+## Instructor
 
-## 📝 Conseil méthodologique
+**Dr. Badia Bouhdid** — ESPRIT School of Engineering
+[badiaa.bouhdid@esprit.tn](mailto:badiaa.bouhdid@esprit.tn) · [LinkedIn](https://www.linkedin.com/in/badiabouhdid)
 
-> **Ne commencez pas par choisir une technologie. Commencez par caractériser le problème, les contraintes et les qualités attendues.**
+This repository supports the **Distributed Web Applications** module at
+[ESPRIT School of Engineering](https://www.esprit.tn).
 
-Une architecture distribuée peut améliorer l’autonomie, le déploiement et la scalabilité, mais elle introduit également des coûts : communication réseau, pannes partielles, cohérence des données, observabilité, sécurité et complexité opérationnelle.
-
-**Bon travail et bon diagnostic architectural !**
----
-
-## 🏫 Cadre pédagogique
-
-### Enseignante
-
-- [Badia Bouhdid](https://www.linkedin.com/in/badiabouhdid)
-
-Ce Prosit est proposé dans le cadre du module **Applications Web Distribuées** à l’[École d’Ingénieurs ESPRIT](https://www.esprit.tn). Il s’inscrit dans une démarche d’**apprentissage par problèmes**, dans laquelle les étudiants analysent une situation, recherchent les connaissances nécessaires, confrontent leurs propositions et construisent une réponse argumentée.
-
-
+<div align="center">
+<sub>Enjoy the journey into distributed systems.</sub>
+</div>
