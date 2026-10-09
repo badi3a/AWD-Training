@@ -32,7 +32,7 @@ concepts from one chapter to the next.
 Each chapter lives in **its own branch**. The `main` branch is the entry point: it presents the module and points to
 the chapters as they become available.
 
-| [`chapter-01`](https://github.com/badi3a/AWD-Training/tree/chapter-01) | Introduction to Distributed Architectures and SOA | Course slides, Prosit 1 | Available |
+| [`chapter-01`](https://github.com/badi3a/AWD-Training/tree/chapter_01) | Introduction to Distributed Architectures and SOA | Course slides, Prosit 1 | Available |
 
 
 To open a chapter, select its branch on GitHub, or from a terminal:
@@ -48,7 +48,7 @@ git switch chapter-01
 ## Chapter 1 — Introduction to Distributed Architectures and SOA
 
 <p align="center">
-  <img src="assets/chapter-01-cover.png" alt="Chapter 1 title slide: Introduction to Distributed Architectures and SOA" width="720">
+  <img src="assets/slide1.png" alt="Chapter 1 title slide: Introduction to Distributed Architectures and SOA" width="720">
 </p>
 
 The first chapter sets the scene for the whole module. It follows the story of software architectures, from the
@@ -102,7 +102,7 @@ benefits and the costs of each option, and recommend what truly fits JobBoard's 
 > **A piece of advice:** do not start by choosing a technology. Start by understanding the problem, the constraints
 > and the qualities that matter.
 
-The full Prosit brief is available in the [`chapter-01`](https://github.com/badi3a/AWD-Training/tree/chapter-01) branch.
+The full Prosit brief is available in the [`chapter-01`](https://github.com/badi3a/AWD-Training/blob/Chapter_01/AWD_Prosit1.pdf) branch.
 
 ---
 
