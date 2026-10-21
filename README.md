@@ -35,7 +35,7 @@ Their implementation with Spring Boot is covered in the dedicated module.
   <img src="https://img.youtube.com/vi/T0TmRpyaGoE/hqdefault.jpg" alt="Web Services and REST APIs: Separating Front End and Back End" width="640">
 </a>
 
-**Web Services & REST APIs: Separating Front End and Back End** · 7 min · English subtitles · built-in quiz<br>
+**Web Services & REST APIs: Separating Front End and Back End** · 7 min <br>
 ▶ [Watch on YouTube](https://youtu.be/T0TmRpyaGoE)
 
 </div>
