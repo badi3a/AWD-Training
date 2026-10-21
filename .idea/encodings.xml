@@ -3,7 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/backEnd/eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backEnd/gateway/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/backEnd/microservices/Job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backEnd/microservices/job/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backEnd/microservices/candidat/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backEnd/microservices/condidature/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backEnd/microservices/meeting/src/main/java" charset="UTF-8" />
