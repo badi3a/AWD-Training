@@ -1,5 +1,6 @@
 fastapi>=0.110
 uvicorn[standard]>=0.29
-# Chapitre 6 : client RabbitMQ asynchrone (pip choisit la version compatible avec votre Python)
+# aio-pika est une bibliothèque Python cliente de RabbitMQ,
+# client RabbitMQ asynchrone (pip choisit la version compatible avec votre Python)
 aio-pika>=9.4,<11
 py-eureka-client>=0.11
