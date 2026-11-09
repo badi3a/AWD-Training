@@ -24,13 +24,13 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ConfigServer" options="-parameters" />
       <module name="Job" options="-parameters" />
-      <module name="candidat" options="-parameters" />
+      <module name="candidat" options="" />
       <module name="condidature" options="" />
       <module name="config-server" options="-parameters" />
       <module name="eureka" options="-parameters" />
-      <module name="gateway" options="-parameters" />
+      <module name="gateway" options="" />
       <module name="meeting" options="" />
-      <module name="notification" options="-parameters" />
+      <module name="notification" options="" />
     </option>
   </component>
 </project>
