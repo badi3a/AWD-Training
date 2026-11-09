@@ -1,0 +1,13 @@
+# Fichiers inutiles pour construire l'image (le contexte envoyé à Docker reste léger)
+target/
+.idea/
+*.iml
+.mvn/
+mvnw
+mvnw.cmd
+HELP.md
+.git
+.gitignore
+.gitattributes
+Dockerfile
+.dockerignore

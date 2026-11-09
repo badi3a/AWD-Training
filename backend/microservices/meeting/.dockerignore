@@ -1,0 +1,9 @@
+# Les modules sont réinstallés dans l'image par npm ci
+node_modules/
+test/
+npm-debug.log
+.env
+.idea/
+.git
+Dockerfile
+.dockerignore

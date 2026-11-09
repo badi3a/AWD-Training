@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices architecture — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html" aria-current="page">Architecture</a></li>
+            <li><a href="diagramme-classe.html">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html">Synchronous communication</a></li>
+            <li><a href="async-communication.html">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>Microservices architecture</h1>
+    <p class="lead">Overview of the JobBoard platform: five business microservices, each with its own database,
+    behind an API gateway secured by Keycloak. The services find each other through Eureka, read their
+    configuration from the Config Server and exchange events through RabbitMQ. Everything runs in Docker.</p>
+    <div class="diagram" data-page="0">
+        <img class="fallback" src="img/1-architecture-microservices.png" alt="Microservices architecture">
+    </div>
+    <div class="tools">
+        <a href="img/1-architecture-microservices.png" target="_blank">PNG image</a>
+        <a href="microservices.drawio" download>Download the draw.io file</a>
+    </div>
+    <p class="help">Diagram toolbar: zoom, change page, full screen. The pencil opens an editable copy in
+    diagrams.net. Without an Internet connection, the PNG image is shown instead.</p>
+
+    <h2>Components</h2>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Component</th><th>Technology</th><th>Port</th><th>Eureka name</th><th>Database</th><th>Role</th></tr></thead>
+        <tbody>
+        <tr><td><b>MS1 · candidat</b></td><td>Spring Boot</td><td>8081</td><td><code>CANDIDAT</code></td><td>H2 (candidat_db)</td><td>Candidates and addresses</td></tr>
+        <tr><td><b>MS2 · job</b></td><td>Spring Boot</td><td>8082</td><td><code>JOB</code></td><td>MySQL (job_db)</td><td>Job offers and categories</td></tr>
+        <tr><td><b>MS3 · candidature</b></td><td>Spring Boot</td><td>8085</td><td><code>CANDIDATURE</code></td><td>MySQL (candidature_db)</td><td>Applications; calls candidat and job (OpenFeign); publishes <code>ApplicationSubmitted</code></td></tr>
+        <tr><td><b>MS4 · meeting</b></td><td>Node.js / Express</td><td>8083</td><td><code>MEETING</code></td><td>MySQL (meeting_db)</td><td>Interviews; bonus: creates an interview to schedule when an application arrives</td></tr>
+        <tr><td><b>MS5 · notification</b></td><td>Python / FastAPI</td><td>8084</td><td><code>NOTIFICATION</code></td><td>MongoDB (notification_db)</td><td>E-mails; consumes <code>ApplicationSubmitted</code></td></tr>
+        <tr><td>API Gateway</td><td>Spring Cloud Gateway</td><td>8080</td><td><code>API-GATEWAY</code></td><td>–</td><td>Single entry point: checks the JWT, routes to <code>lb://NAME</code>, balances the load</td></tr>
+        <tr><td>Eureka Server</td><td>Spring Cloud Netflix</td><td>8761</td><td>–</td><td>–</td><td>Service registry (registration + heartbeat every 30 s)</td></tr>
+        <tr><td>Config Server</td><td>Spring Cloud Config</td><td>8888</td><td>–</td><td>Git repository</td><td>Centralised configuration, read at start-up</td></tr>
+        <tr><td>Keycloak</td><td>Keycloak</td><td>8180</td><td>–</td><td>–</td><td>Identity provider (realm <code>jobboard</code>), issues the JWTs</td></tr>
+        <tr><td>RabbitMQ</td><td>RabbitMQ 4.3</td><td>5672 / 15672</td><td>–</td><td>–</td><td>Message broker: exchange <code>jobboard.events</code></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="two-columns">
+        <div class="block"><h3>Key points</h3><div><ul>
+            <li>The client only talks to the <b>gateway</b>; the microservices stay in the private network.</li>
+            <li><b>One database per microservice</b>: no service reads another service's database.</li>
+            <li>Eureka is a <b>directory, not a proxy</b>: calls go straight to the chosen instance.</li>
+            <li><b>Synchronous</b> call (OpenFeign) when the answer is needed right away; <b>event</b>
+                (RabbitMQ) for work that can wait (e-mail, interview).</li>
+        </ul></div></div>
+        </div>
+    </div>
+
+    <div class="pagination"><a href="indexDoc.html">← Home</a><a href="diagramme-classe.html">Class diagram →</a></div>
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="diagrams.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

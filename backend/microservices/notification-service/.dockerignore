@@ -1,0 +1,11 @@
+# Environnement virtuel et fichiers générés : jamais dans l'image
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/
+.idea/
+.git
+Dockerfile
+.dockerignore

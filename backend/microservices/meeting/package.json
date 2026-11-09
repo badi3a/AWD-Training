@@ -1,0 +1,20 @@
+{
+  "name": "meeting",
+  "version": "1.0.0",
+  "description": "Meeting microservice (Node.js / Express) - hello endpoint + Swagger, logic to be completed by students",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["microservice", "express", "swagger", "meeting"],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

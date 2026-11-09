@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class diagram — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html">Architecture</a></li>
+            <li><a href="diagramme-classe.html" aria-current="page">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html">Synchronous communication</a></li>
+            <li><a href="async-communication.html">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>Class diagram</h1>
+    <p class="lead">The conceptual model of the whole JobBoard domain: candidates, jobs, applications, interviews and
+    notifications. The colour shows which microservice owns each class.</p>
+    <div class="diagram" data-page="1">
+        <img class="fallback" src="img/2-diagramme-classe.png" alt="Class diagram">
+    </div>
+    <div class="tools">
+        <a href="img/2-diagramme-classe.png" target="_blank">PNG image</a>
+        <a href="microservices.drawio" download>Download the draw.io file</a>
+    </div>
+    <p class="help">Diagram toolbar: zoom, change page, full screen. The pencil opens an editable copy in
+    diagrams.net. Without an Internet connection, the PNG image is shown instead.</p>
+
+    <h2>Reading the diagram</h2>
+    <div class="two-columns">
+        <div class="block"><h3>Associations</h3><div><ul>
+            <li>A candidate has at most one address (0..1 — 0..1).</li>
+            <li>A candidate submits 0..* applications; an application concerns exactly one job.</li>
+            <li>A job belongs to one category; a category groups 0..* jobs.</li>
+            <li>An application can lead to one interview (0..1).</li>
+            <li>Applications and interviews trigger notifications.</li>
+        </ul></div></div>
+        <div class="block green"><h3>Business rules</h3><div><ul>
+            <li>A candidate applies only once to the same job → 409.</li>
+            <li>Applications are accepted only for a job with <code>available = true</code> → otherwise 409.</li>
+            <li><code>applicationDate</code> is optional (today by default) and never in the future.</li>
+            <li>Candidate e-mail and category name are unique.</li>
+        </ul></div></div>
+    </div>
+    <div class="block"><h3>Enumerations</h3><div><ul>
+        <li><code>ApplicationStatus</code>: <code>SUBMITTED</code>, <code>WITHDRAWN</code>.</li>
+        <li><code>MeetingStatus</code>: <code>TO_SCHEDULE</code>, <code>SCHEDULED</code>, <code>DONE</code>, <code>CANCELLED</code>.</li>
+    </ul></div></div>
+
+    <div class="pagination"><a href="architecture-microservices.html">← Microservices architecture</a><a href="diagramme-classe-domaine.html">Class diagram per domain →</a></div>
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="diagrams.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

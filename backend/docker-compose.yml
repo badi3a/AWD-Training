@@ -1,0 +1,161 @@
+# =====================================================================
+#  JobBoard – toute l'application avec Docker Compose
+#
+#  docker compose up -d --build      construit les images puis démarre tout
+#  docker compose ps                 état des conteneurs (et des healthchecks)
+#  docker compose logs -f candidature   suivre les journaux d'un service
+#  docker compose stop / start       arrêter / relancer sans rien supprimer
+#  docker compose down               supprime les conteneurs et le réseau (les volumes restent)
+#  docker compose down -v            supprime aussi les volumes : bases MySQL et messages effacés
+#
+#  Depuis le poste (navigateur, Postman) :
+#    Gateway, point d'entrée unique  http://localhost:8080
+#    Eureka                          http://localhost:8761
+#    Console RabbitMQ                http://localhost:15672   (awd / awd)
+#    MySQL                           localhost:3307           (root / root)
+#  Entre conteneurs : le NOM DU SERVICE sert d'adresse (mysql, rabbitmq, discovery…),
+#  jamais "localhost" (localhost = le conteneur lui-même).
+#
+#  Les valeurs ${VARIABLE:-défaut} peuvent être changées dans un fichier .env (voir .env.example).
+# =====================================================================
+name: jobboard
+
+services:
+
+  # ------------------------------------------------------------------ infrastructure
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+    ports:
+      - "3307:3306"                     # 3307 sur le poste : évite le conflit avec un MySQL local (XAMPP, WAMP)
+    volumes:
+      - mysql-data:/var/lib/mysql       # les bases survivent à l'arrêt des conteneurs
+      # Script exécuté UNE SEULE FOIS, au premier démarrage (volume vide) : crée job_db et ses données
+      - ./microservices/job/database/job_db.sql:/docker-entrypoint-initdb.d/01-job_db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  rabbitmq:
+    image: rabbitmq:4.3-management
+    hostname: jobboard-rabbitmq         # nom de nœud fixe : les données du volume restent lisibles
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-awd}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-awd}
+    ports:
+      - "5672:5672"                     # AMQP (utile pour lancer un service hors Docker)
+      - "15672:15672"                   # console web
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  # ------------------------------------------------------------------ Spring Cloud
+  discovery:
+    build: ./discovery
+    image: jobboard/discovery:1.0
+    ports:
+      - "8761:8761"
+    healthcheck:                        # prêt dès que le port 8761 répond
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/8761' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  gateway:
+    build: ./gateway
+    image: jobboard/gateway:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_URL: http://discovery:8761/eureka/
+      MEETING_URL: http://meeting:8083
+    depends_on:
+      discovery:
+        condition: service_healthy
+
+  # ------------------------------------------------------------------ microservices
+  candidat:
+    build: ./microservices/candidat
+    image: jobboard/candidat:1.0
+    ports:
+      - "8081:8081"
+    environment:
+      EUREKA_URL: http://discovery:8761/eureka/
+    depends_on:
+      discovery:
+        condition: service_healthy
+
+  job:
+    build: ./microservices/job
+    image: jobboard/job:1.0
+    ports:
+      - "8082:8082"
+    environment:
+      EUREKA_URL: http://discovery:8761/eureka/
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+    depends_on:
+      discovery:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+  candidature:
+    build: ./microservices/candidature-service
+    image: jobboard/candidature:1.0
+    ports:
+      - "8085:8085"
+    environment:
+      EUREKA_URL: http://discovery:8761/eureka/
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: ${RABBITMQ_USER:-awd}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-awd}
+    depends_on:
+      discovery:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  notification:
+    build: ./microservices/notification-service
+    image: jobboard/notification:1.0
+    ports:
+      - "8084:8084"
+    environment:
+      RABBITMQ_URL: amqp://${RABBITMQ_USER:-awd}:${RABBITMQ_PASSWORD:-awd}@rabbitmq:5672/
+      EUREKA_SERVER: http://discovery:8761/eureka/
+      EUREKA_INSTANCE_HOST: notification   # adresse annoncée à Eureka = nom du service
+    depends_on:
+      discovery:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  # ------------------------------------------------------------------ travail à faire (solution)
+  meeting:
+    build: ./microservices/meeting
+    image: jobboard/meeting:1.0
+    ports:
+      - "8083:8083"
+    environment:
+      PORT: 8083
+
+volumes:
+  mysql-data:
+  rabbitmq-data:
