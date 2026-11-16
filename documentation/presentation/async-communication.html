@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchronous communication (RabbitMQ) — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html">Architecture</a></li>
+            <li><a href="diagramme-classe.html">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html">Synchronous communication</a></li>
+            <li><a href="async-communication.html" aria-current="page">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>Asynchronous communication (RabbitMQ)</h1>
+    <p class="lead">Once an application is saved, candidature publishes the <code>ApplicationSubmitted</code> event.
+    notification sends the “Application received” e-mail and, as a bonus, meeting creates an interview to schedule.
+    The candidate waits for neither of them.</p>
+    <div class="diagram" data-page="4">
+        <img class="fallback" src="img/5-communication-asynchrone.png" alt="Asynchronous communication (RabbitMQ)">
+    </div>
+    <div class="tools">
+        <a href="img/5-communication-asynchrone.png" target="_blank">PNG image</a>
+        <a href="microservices.drawio" download>Download the draw.io file</a>
+    </div>
+    <p class="help">Diagram toolbar: zoom, change page, full screen. The pencil opens an editable copy in
+    diagrams.net. Without an Internet connection, the PNG image is shown instead.</p>
+
+    <h2>Topology</h2>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Element</th><th>Name</th><th>Details</th></tr></thead>
+        <tbody>
+        <tr><td>Exchange</td><td><code>jobboard.events</code></td><td><b>topic</b> type, durable; owned by the producer (candidature)</td></tr>
+        <tr><td>Routing key</td><td><code>application.submitted</code></td><td><code>ApplicationSubmitted</code> event</td></tr>
+        <tr><td>Queue</td><td><code>notification.application-submitted</code></td><td>owned by notification; manual ack, prefetch 10</td></tr>
+        <tr><td>Queue (bonus)</td><td><code>meeting.application-submitted</code></td><td>owned by meeting</td></tr>
+        <tr><td>Dead-letter exchange</td><td><code>jobboard.events.dlx</code></td><td>direct type</td></tr>
+        <tr><td>Dead-letter queue</td><td><code>notification.application-submitted.dlq</code></td><td>rejected messages (nack without requeue)</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="two-columns">
+        <div class="block green"><h3>Design rules</h3><div><ul>
+            <li>The producer owns the exchange; each consumer owns its queue.</li>
+            <li>“At least once” delivery: the consumer is <b>idempotent</b> (it remembers the <code>eventId</code>s already processed).</li>
+            <li>If notification is stopped, messages wait in its queue: the application is not blocked.</li>
+            <li>Workshop 5: publish <code>ApplicationWithdrawn</code> (key <code>application.withdrawn</code>) when an application is deleted.</li>
+        </ul></div></div>
+        <div class="block"><h3>Running RabbitMQ</h3><div>
+            Docker image <code>rabbitmq:4.3-management</code>, user <code>awd</code> / <code>awd</code>,
+            ports <code>5672</code> (AMQP) and <code>15672</code> (web UI:
+            <a href="http://localhost:15672" target="_blank">http://localhost:15672</a>).
+        </div></div>
+    </div>
+
+    <div class="pagination"><a href="communication-synchrone.html">← Synchronous communication (OpenFeign)</a><a href="keycloak-principe.html">How Keycloak works →</a></div>
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="diagrams.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

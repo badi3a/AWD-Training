@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class diagram per domain — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html">Architecture</a></li>
+            <li><a href="diagramme-classe.html">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html" aria-current="page">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html">Synchronous communication</a></li>
+            <li><a href="async-communication.html">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>Class diagram per domain</h1>
+    <p class="lead">The same model split into bounded contexts: <b>one context = one microservice = one database</b>.
+    Inside a domain, associations are real JPA relationships. Between two domains, only an <b>identifier</b> is kept.</p>
+    <div class="diagram" data-page="2">
+        <img class="fallback" src="img/3-diagramme-classe-domaine.png" alt="Class diagram per domain">
+    </div>
+    <div class="tools">
+        <a href="img/3-diagramme-classe-domaine.png" target="_blank">PNG image</a>
+        <a href="microservices.drawio" download>Download the draw.io file</a>
+    </div>
+    <p class="help">Diagram toolbar: zoom, change page, full screen. The pencil opens an editable copy in
+    diagrams.net. Without an Internet connection, the PNG image is shown instead.</p>
+
+    <h2>Between two domains</h2>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Rule</th><th>In JobBoard</th></tr></thead>
+        <tbody>
+        <tr><td>A domain stores only the <b>id</b> of an object owned by another domain</td><td><code>Candidature</code> stores <code>candidateId</code> and <code>jobId</code> (plain <code>Long</code> values, no <code>@ManyToOne</code>)</td></tr>
+        <tr><td>One database per service, <b>no foreign key</b> between services</td><td>candidat_db, job_db, candidature_db, meeting_db, notification_db</td></tr>
+        <tr><td>Data from another domain is read through <b>its API</b></td><td><code>GET /api/candidates/{id}</code> and <code>GET /api/jobs/{id}</code> with OpenFeign</td></tr>
+        <tr><td>… or received in an <b>event</b></td><td>meeting and notification get the ids in <code>ApplicationSubmitted</code></td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="two-columns">
+        <div class="block"><h3>The candidature classes</h3><div><ul>
+            <li><code>Candidature</code>: the JPA entity, with <code>candidateId</code> and <code>jobId</code>.</li>
+            <li><code>CandidatureResponse</code>: the record returned to the client (application + candidate + job read through Feign).</li>
+            <li><code>ApplicationSubmitted</code>: the event published to RabbitMQ after the INSERT.</li>
+        </ul></div></div>
+        <div class="block green"><h3>Microservice numbering</h3><div><ul>
+            <li>MS1 candidat · MS2 job · MS3 candidature</li>
+            <li>MS4 meeting (Node.js) · MS5 notification (Python)</li>
+            <li>RabbitMQ, Eureka, Config Server, Keycloak and the gateway are infrastructure, not microservices.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="pagination"><a href="diagramme-classe.html">← Class diagram</a><a href="communication-synchrone.html">Synchronous communication (OpenFeign) →</a></div>
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="diagrams.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

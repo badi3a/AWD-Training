@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Keycloak works — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html">Architecture</a></li>
+            <li><a href="diagramme-classe.html">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html">Synchronous communication</a></li>
+            <li><a href="async-communication.html">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html" aria-current="page">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>How Keycloak works</h1>
+    <p class="lead">How the gateway protects the API: the application gets a JWT from Keycloak, then sends it with every
+    request. The gateway checks this token with Keycloak's public key before routing, without calling Keycloak on
+    every request.</p>
+    <div class="diagram" data-page="5">
+        <img class="fallback" src="img/6-keycloak.png" alt="How Keycloak works">
+    </div>
+    <div class="tools">
+        <a href="img/6-keycloak.png" target="_blank">PNG image</a>
+        <a href="microservices.drawio" download>Download the draw.io file</a>
+    </div>
+    <p class="help">Diagram toolbar: zoom, change page, full screen. The pencil opens an editable copy in
+    diagrams.net. Without an Internet connection, the PNG image is shown instead.</p>
+
+    <h2>The eight steps</h2>
+    <div class="two-columns">
+        <div class="block"><h3>Getting and using the token</h3><div><ul>
+            <li><b>1</b> The user logs in on the Keycloak page (Authorization Code + PKCE).</li>
+            <li><b>2</b> The application receives an <i>access token</i> (JWT) and a <i>refresh token</i>.</li>
+            <li><b>3</b> Every request carries the header <code>Authorization: Bearer &lt;JWT&gt;</code>.</li>
+            <li><b>4</b> The gateway downloads Keycloak's public keys (JWKS) once.</li>
+            <li><b>5</b> It checks the signature, the expiry, the issuer and the role.</li>
+            <li><b>6–8</b> The request is routed to the microservice; response, or <b>401</b> / <b>403</b>.</li>
+        </ul></div></div>
+        <div class="block green"><h3>Suggested configuration</h3><div><ul>
+            <li>Realm <code>jobboard</code>, public client <code>jobboard-front</code>.</li>
+            <li>Realm roles: <code>CANDIDATE</code>, <code>RECRUITER</code>.</li>
+            <li>Gateway: <code>spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8180/realms/jobboard</code></li>
+            <li>Keycloak published on port <b>8180</b>, because the gateway already uses 8080.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="pagination"><a href="async-communication.html">← Asynchronous communication (RabbitMQ)</a><a href="indexDoc.html">Home →</a></div>
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="diagrams.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

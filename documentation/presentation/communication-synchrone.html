@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synchronous communication (OpenFeign) — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html">Architecture</a></li>
+            <li><a href="diagramme-classe.html">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html" aria-current="page">Synchronous communication</a></li>
+            <li><a href="async-communication.html">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>Synchronous communication (OpenFeign)</h1>
+    <p class="lead">Sequence diagram of the “apply for a job” scenario: Lina (candidate #4) applies to job #1 from the
+    mobile app. The request is followed from the gateway to the database, through Eureka and the two OpenFeign calls.</p>
+    <div class="diagram" data-page="3">
+        <img class="fallback" src="img/4-communication-synchrone.png" alt="Synchronous communication (OpenFeign)">
+    </div>
+    <div class="tools">
+        <a href="img/4-communication-synchrone.png" target="_blank">PNG image</a>
+        <a href="microservices.drawio" download>Download the draw.io file</a>
+    </div>
+    <p class="help">Diagram toolbar: zoom, change page, full screen. The pencil opens an editable copy in
+    diagrams.net. Without an Internet connection, the PNG image is shown instead.</p>
+
+    <h2>The steps</h2>
+    <div class="two-columns">
+        <div class="block"><h3>Synchronous path (1 → 11)</h3><div><ul>
+            <li><b>1–2</b> the gateway checks the JWT and picks the route <code>/api/applications/** → lb://CANDIDATURE</code>.</li>
+            <li><b>3–4</b> it finds the instances in Eureka and forwards the request to one of them.</li>
+            <li><b>5–7</b> candidature resolves <code>CANDIDAT</code> and <code>JOB</code>, then reads the candidate and the job (OpenFeign).</li>
+            <li><b>8–9</b> business rules, then INSERT into <code>candidature_db</code>.</li>
+            <li><b>10</b> publishes <code>ApplicationSubmitted</code>, without waiting.</li>
+            <li><b>11</b> answers <code>201 Created</code> with <code>Location: /api/applications/6</code>.</li>
+        </ul></div></div>
+        <div class="block red"><h3>Error cases</h3><div><ul>
+            <li><b>401 / 403</b> at the gateway: missing token or insufficient role.</li>
+            <li><b>404</b> candidate or job not found (<code>FeignException.NotFound</code>).</li>
+            <li><b>409</b> job closed or application already exists.</li>
+            <li><b>400</b> application date in the future.</li>
+            <li><b>503</b> CANDIDAT or JOB unavailable (service stopped, not in Eureka).</li>
+        </ul></div></div>
+    </div>
+    <p>For the implementation details, see <b>Workshop 3</b> (OpenFeign) and the README of the candidature microservice.</p>
+
+    <div class="pagination"><a href="diagramme-classe-domaine.html">← Class diagram per domain</a><a href="async-communication.html">Asynchronous communication (RabbitMQ) →</a></div>
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="diagrams.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

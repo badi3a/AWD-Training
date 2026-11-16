@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home — JobBoard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="band"><span></span><span></span></div>
+<header>
+    <nav>
+        <a class="logo" href="indexDoc.html">JobBoard · Documentation<small>AWD module — microservices architecture</small></a>
+        <button class="burger" type="button" aria-label="Open the menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+            <li><a href="architecture-microservices.html">Architecture</a></li>
+            <li><a href="diagramme-classe.html">Class diagram</a></li>
+            <li><a href="diagramme-classe-domaine.html">Classes per domain</a></li>
+            <li><a href="communication-synchrone.html">Synchronous communication</a></li>
+            <li><a href="async-communication.html">Asynchronous communication</a></li>
+            <li><a href="keycloak-principe.html">Keycloak</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h1>JobBoard application documentation</h1>
+    <p class="lead">Entry point to the diagrams that document the JobBoard application, built with a microservices
+    architecture in the <b>Distributed Web Applications</b> module. The pages follow the order of the course: from
+    splitting into microservices to synchronous, then asynchronous communication, and finally security.</p>
+
+    <div class="cards">
+        <a class="card" href="architecture-microservices.html">
+            <img src="img/1-architecture-microservices.png" alt="Preview: Microservices architecture" loading="lazy">
+            <div class="card-body"><h3><span class="num">1</span>Microservices architecture</h3>
+            <p>The 5 microservices, the gateway, Eureka, Config Server, Keycloak, RabbitMQ and Docker.</p></div>
+        </a>
+        <a class="card" href="diagramme-classe.html">
+            <img src="img/2-diagramme-classe.png" alt="Preview: Class diagram" loading="lazy">
+            <div class="card-body"><h3><span class="num">2</span>Class diagram</h3>
+            <p>The conceptual model of the whole JobBoard domain, coloured by microservice.</p></div>
+        </a>
+        <a class="card" href="diagramme-classe-domaine.html">
+            <img src="img/3-diagramme-classe-domaine.png" alt="Preview: Class diagram per domain" loading="lazy">
+            <div class="card-body"><h3><span class="num">3</span>Class diagram per domain</h3>
+            <p>One bounded context per microservice: internal associations, references by id between domains.</p></div>
+        </a>
+        <a class="card" href="communication-synchrone.html">
+            <img src="img/4-communication-synchrone.png" alt="Preview: Synchronous communication (OpenFeign)" loading="lazy">
+            <div class="card-body"><h3><span class="num">4</span>Synchronous communication (OpenFeign)</h3>
+            <p>“Apply for a job” sequence diagram: gateway, Eureka and two OpenFeign calls.</p></div>
+        </a>
+        <a class="card" href="async-communication.html">
+            <img src="img/5-communication-asynchrone.png" alt="Preview: Asynchronous communication (RabbitMQ)" loading="lazy">
+            <div class="card-body"><h3><span class="num">5</span>Asynchronous communication (RabbitMQ)</h3>
+            <p>ApplicationSubmitted event: exchange, queues, dead-letter queue and consumers.</p></div>
+        </a>
+        <a class="card" href="keycloak-principe.html">
+            <img src="img/6-keycloak.png" alt="Preview: How Keycloak works" loading="lazy">
+            <div class="card-body"><h3><span class="num">6</span>How Keycloak works</h3>
+            <p>Login, JWT and checks by the gateway, in 8 numbered steps.</p></div>
+        </a>
+    </div>
+
+    <h2>Files</h2>
+    <ul>
+        <li><a href="microservices.drawio" download>microservices.drawio</a>: the single source of the six diagrams
+            (open it in <a href="https://app.diagrams.net" target="_blank">diagrams.net</a> or draw.io Desktop).</li>
+        <li><code>img/</code> folder: one PNG image per diagram, for your reports and presentations.</li>
+    </ul>
+
+    <div class="block green"><h3>The running scenario</h3><div>
+        Lina Mansour (candidate #4) applies to job offer #1 “Java Spring Boot Developer” from the mobile app:
+        <code>POST /api/applications</code>. Pages 4 and 5 follow this same request, first on the synchronous path,
+        then after the response.
+    </div></div>
+
+</main>
+
+<footer>
+    <div>Dr. B. Bouhdid (ESPRIT)</div>
+    <div>JobBoard application documentation — AWD module</div>
+    <div>2026–2027</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
