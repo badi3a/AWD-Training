@@ -7,6 +7,9 @@ const app = express();
 
 app.use(express.json());
 
+// ---- Health (used by Eureka) ----
+app.get('/health', (req, res) => res.json({ status: 'UP' }));
+
 // ---- Swagger documentation ----
 app.get('/v3/api-docs', (req, res) => res.json(openapiSpec));
 app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(openapiSpec));
