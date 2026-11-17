@@ -133,3 +133,15 @@ Démarrez d’abord le serveur Eureka avant d’exécuter les microservices clie
 
 Ce workshop a été développé dans le cadre du module **Applications Web Distribuées**,  
 à l’**École d’Ingénieurs ESPRIT**.
+## Équipe
+- Prénom Nom
+- Prénom Nom
+
+## Dashboard Eureka
+![Dashboard Eureka](docs/eureka-dashboard.png)
+
+## Équipe
+- Kmar Srarfi
+
+## Dashboard Eureka
+![Dashboard Eureka](docs/eureka-dashboard.png)
