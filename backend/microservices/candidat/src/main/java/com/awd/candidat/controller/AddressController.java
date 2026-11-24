@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mic1/addresses")
+@RequestMapping("/api/addresses")
 @Tag(name = "Addresses", description = "Manage addresses")
 public class AddressController {
 

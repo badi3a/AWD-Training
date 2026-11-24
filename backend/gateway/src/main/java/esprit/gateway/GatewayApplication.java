@@ -11,14 +11,18 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 public class GatewayApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
-    }
-    @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
-
-        return builder.routes().route("candidat",r->r.path("/mic1/**")
-                   .uri("lb://CANDIDAT") )
-                .build();
-         }
+	public static void main(String[] args) {
+		SpringApplication.run(GatewayApplication.class, args);
+	}
+	@Bean //
+	public RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
+		//EUREKA + Gateway
+		//roundRobin: LoadBalancer
+		return builder.routes()
+				.route("Candidat",r->r.path("/api/candidates/**")
+						.uri("lb://CANDIDAT") )
+				.route("Job", r->r.path("/api/jobs/**")
+						.uri("lb://JOB") )
+				.build();
+	}
 }
